@@ -1,6 +1,8 @@
 #HomeBrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+brew install --cask google-cloud-sdk
+
 brew cask install emacs
 brew cask install google-chrome
 brew cask install chromedriver
