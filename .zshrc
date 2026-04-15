@@ -1,39 +1,62 @@
-# .bashrc
-# by boot shell
+# ------------------------------------------------------------------------------
+# ~/.zshrc
+# Interactive shell configuration (loaded on every terminal start)
+# ------------------------------------------------------------------------------
 
-# --- .zshrc ---
-# インタラクティブシェル向け: ターミナルを開いたときに毎回読み込まれる
+# ------------------------------------------------------------------------------
+# 1. Environment variables
+# ------------------------------------------------------------------------------
 
-# 1. 環境変数の設定（必要に応じて）
 export EDITOR='vim'
 export LANG='ja_JP.UTF-8'
 
-# 2. パスの追加
+# ------------------------------------------------------------------------------
+# 2. PATH settings
+# 順序に意味あり（優先度の高いものを前に）
+# ------------------------------------------------------------------------------
+
+# User local bin
 export PATH="$HOME/bin:$PATH"
 
-# 3. エイリアス（別ファイルで管理する場合は後述）
-if [ -f "$HOME/.zsh_aliases" ]; then
+# nodebrew
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
+
+# ------------------------------------------------------------------------------
+# 3. Aliases (external file)
+# ------------------------------------------------------------------------------
+
+if [[ -f "$HOME/.zsh_aliases" ]]; then
   source "$HOME/.zsh_aliases"
 fi
 
-# 4. プロンプトのカスタマイズ（例）
+# ------------------------------------------------------------------------------
+# 4. Prompt
+# ------------------------------------------------------------------------------
+
 PROMPT='%n@%m:%~%# '
 
-# 5. プラグイン・補完の設定例
-# eval "$(zoxide init zsh)"   # zoxide使う場合
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# ------------------------------------------------------------------------------
+# 5. Zsh options
+# ------------------------------------------------------------------------------
 
-# 6. その他の設定
-setopt autocd              # ディレクトリ名だけでcd
-setopt correct             # コマンドのタイプミス補完
-setopt hist_ignore_dups    # 重複した履歴を記録しない
+setopt autocd           # ディレクトリ名だけで cd
+setopt correct          # コマンドのタイプミス補完
+setopt hist_ignore_dups # 重複履歴を記録しない
 
+# ------------------------------------------------------------------------------
+# 6. Optional tools (uncomment if needed)
+# ------------------------------------------------------------------------------
 
+# zoxide (fast cd)
+# eval "$(zoxide init zsh)"
 
-function jslide() {
-    jupyter nbconvert --to slides $1 --post serve
+# autosuggestions
+# source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# ------------------------------------------------------------------------------
+# 7. Functions
+# ------------------------------------------------------------------------------
+
+jslide() {
+  jupyter nbconvert --to slides "$1" --post serve
 }
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# pyenv
-#eval "$(pyenv init -)"
