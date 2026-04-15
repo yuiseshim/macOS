@@ -23,8 +23,8 @@ export PATH="$HOME/.nodebrew/current/bin:$PATH"
 # 3. Aliases
 # ------------------------------------------------------------------------------
 
-if [[ -f "$HOME/.zsh_aliases" ]]; then
-  source "$HOME/.zsh_aliases"
+if [[ -f "$HOME/.aliases" ]]; then
+  source "$HOME/.aliases"
 fi
 
 # ------------------------------------------------------------------------------
