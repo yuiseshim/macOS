@@ -6,6 +6,26 @@ BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 FORMULAE_FILE="$BASE_DIR/brew_formulae.txt"
 CASKS_FILE="$BASE_DIR/brew_casks.txt"
 
+# ------------------------------------------------------------------------------
+# sudo keep-alive
+# 最初に一度だけ管理者権限を確認し、その後は期限切れを防ぐ
+# ------------------------------------------------------------------------------
+
+echo '==> Asking for administrator password...'
+sudo -v
+
+while true; do
+  sudo -n true
+  sleep 60
+  kill -0 "$$" || exit
+done 2>/dev/null &
+SUDO_KEEPALIVE_PID=$!
+
+cleanup() {
+  kill "$SUDO_KEEPALIVE_PID" >/dev/null 2>&1 || true
+}
+trap cleanup EXIT
+
 echo '==> Checking Xcode Command Line Tools...'
 if ! xcode-select -p >/dev/null 2>&1; then
   echo 'Please run: xcode-select --install'
@@ -18,7 +38,7 @@ if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Apple Silicon / Intel対応
+# Apple Silicon / Intel 対応
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x /usr/local/bin/brew ]]; then
