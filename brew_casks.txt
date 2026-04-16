@@ -18,3 +18,4 @@ firealpaca
 onyx
 macdown
 onedrive
+notion
